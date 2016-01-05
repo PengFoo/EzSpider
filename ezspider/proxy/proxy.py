@@ -16,41 +16,49 @@ curProcessNum = 0
 initialized = False
 proxyIpList = []  # proxy ips available
 proxySupplier = []
-testUrl = 'http://www.gsdata.cn/query/wx?q=test'
+testUrl2 = 'http://www.gsdata.cn/query/wx?q=test'
+testUrl = 'http://www.baidu.com/'
 
 
-def init():
-    global initialized, p, q
+def init(poolSize=50, url=''):
+    global initialized, p, q, testUrl
+    if url != '':
+        testUrl = url
     if not initialized:
-        p = Pool(50)
+        p = Pool(poolSize)
         initialized = True
 
 
 def addProxyIps(ipList):
+    """
+    add an ipList to the global variable proxyIpList
+    shall test each ip before adding
+    :param ipList: a list of 'ip:port'
+    :return: null
+    """
     for ip in ipList:
         addProxyIpAsync(ip)
 
 
 def addProxyIpAsync(ip):
-    '''
+    """
     using multiprocessing pool to
     test and add the proxy ip
     :param ip: a 'ip:port' formatted string
     :return: null
-    '''
+    """
     global curProcessNum
     curProcessNum += 1
     p.apply_async(addProxyIp, args=(ip,), callback=processNumCallback)
 
 
 def addProxyIp(ip):
-    '''
+    """
     test if the ip is available,
     and add into the proxyIpList
     :param ip: a 'ip:port' formatted string
     :return: null
-    '''
-    global curProcessNum
+    """
     r = requests.session()
     proxy = {'http': str(ip)}
     try:
