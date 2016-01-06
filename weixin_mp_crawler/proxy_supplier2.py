@@ -8,7 +8,14 @@ import requests
 from multiprocessing import freeze_support
 
 
-url = 'http://www.haodailiip.com/domftiqu?country=%E5%85%A8%E9%83%A8&region=%E5%85%A8%E9%83%A8&city=%E5%85%A8%E9%83%A8&number=50&anonType=-1&proxyType=-1&ispId=-1'
+url = 'http://www.haodailiip.com/domftiqu?' \
+      'country=%E5%85%A8%E9%83%A8&' \
+      'region=%E5%85%A8%E9%83%A8&' \
+      'city=%E5%85%A8%E9%83%A8&' \
+      'number=50&' \
+      'anonType=-1&' \
+      'proxyType=-1&' \
+      'ispId=-1'
 
 
 def getProxIps():
